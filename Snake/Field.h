@@ -1,15 +1,27 @@
 #pragma once
 
-class CField
+class CField :
+	public IField
 {
 private:
-	size_t m_length;
+	size_t m_width;
 	size_t m_height;
 
-	using Table = std::vector<std::vector<int>>;
-	Table m_field;
+//	using Table = std::vector<std::vector<int>>;
+//	Table m_field;
+
+	std::unique_ptr<ISnake> m_pSnake;
+
+	CPoint m_foodCell;
 
 public:
-	explicit CField(size_t length, size_t hight);
-	void GenerateFood();
+	explicit CField(std::unique_ptr<ISnake>&&, size_t, size_t);
+	
+	bool Tic() override;
+	
+	void Print() override;
+
+private:
+
+	void GenerateNextFoodItem();
 };

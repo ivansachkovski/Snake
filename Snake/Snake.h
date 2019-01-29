@@ -1,14 +1,7 @@
 #pragma once
 
-class CPoint
-{
-	int x;
-	int y;
-};
-
-using PointsQueue = std::queue<CPoint>;
-
-class CSnake
+class CSnake : 
+	public ISnake
 {
 private:
 	PointsQueue m_body;
@@ -17,5 +10,8 @@ public:
 	CSnake();
 	~CSnake();
 
+	bool Contain(const CPoint&) override;
+
 	void EatFood();
+	size_t GetLength() override;
 };
