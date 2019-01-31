@@ -6,6 +6,8 @@ class CSnake :
 private:
 	PointsQueue m_body;
 
+	EDirection m_direction;
+
 public:
 	CSnake();
 	~CSnake();
@@ -14,4 +16,11 @@ public:
 
 	void EatFood();
 	size_t GetLength() override;
+
+	void Tic(const EDirection) override;
+
+	void Init(const CPoint&) override;
+
+private:
+
 };

@@ -1,13 +1,17 @@
 #include "stdafx.h"
-#include <conio.h>
-#include <iostream>
 
-constexpr char g_exitCharacter = '.';
+// Use this character to sig
+constexpr int g_exitCharacter = '.';
 
-void Input(std::atomic_bool& bStop)
+void Input(std::atomic_bool& bStop, std::atomic_int& input)
 {
-	for (char inputCharacter = 0; inputCharacter != g_exitCharacter && !bStop; inputCharacter = _getch());
-	
+	int inputCharacter = 0;
+	while (!bStop && inputCharacter != g_exitCharacter)
+	{
+		input = inputCharacter;
+		inputCharacter = _getch();
+	}
+
 	bStop = true;
 
 	return;
@@ -16,16 +20,23 @@ void Input(std::atomic_bool& bStop)
 
 int main()
 {
+	// Create all necessary objects
 	std::unique_ptr<ISnake> pSnake(new CSnake());
 	std::unique_ptr<IField> pField(new CField(std::move(pSnake), 10, 10));
 	
+	// Use variable bStop to signalize about any end of the game
 	std::atomic_bool bStop = false;
-	
-	std::thread inputThread(&Input, std::ref(bStop));
+	std::atomic_int input = 0;
 
-	while (!bStop && pField->Tic())
+	// Use separate thread to catch input
+	std::thread inputThread(&Input, std::ref(bStop), std::ref(input));
+
+	// Main loop
+	while (!bStop)
 	{
-		pField->Print();
+		int action = input;
+		bStop = !pField->Tic(action);
+		pField->PrintToConsole();
 		Sleep(500);
 	}
 

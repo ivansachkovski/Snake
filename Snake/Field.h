@@ -17,9 +17,9 @@ private:
 public:
 	explicit CField(std::unique_ptr<ISnake>&&, size_t, size_t);
 	
-	bool Tic() override;
+	bool Tic(int action) override;
 	
-	void Print() override;
+	void PrintToConsole() override;
 
 private:
 
