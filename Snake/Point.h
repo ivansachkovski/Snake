@@ -1,5 +1,6 @@
 #pragma once
 
+// Use this enumeration for determination of shake's movement direction
 enum EDirection
 {
 	eUp,
@@ -9,11 +10,14 @@ enum EDirection
 	eUnknown
 };
 
-struct CPoint
+
+class CPoint
 {
+private:
 	size_t m_xWidth;
 	size_t m_yHeight;
 
+public:
 	explicit CPoint(size_t xWidth, size_t yHeight) :
 		m_xWidth(xWidth),
 		m_yHeight(yHeight)
@@ -21,17 +25,17 @@ struct CPoint
 
 	}
 
-	bool Equal(size_t xWidth, size_t yHeight)
+	bool EqualTo(size_t xWidth, size_t yHeight) const
 	{
 		return (m_xWidth == xWidth && m_yHeight == yHeight);
 	}
 
-	bool Equal(const CPoint& point)
+	bool EqualTo(const CPoint& point) const
 	{
-		return Equal(point.m_xWidth, point.m_yHeight);
+		return EqualTo(point.m_xWidth, point.m_yHeight);
 	}
 
-	CPoint GetNextPoint(const EDirection direction)
+	CPoint GetNextPointAccordingToDirection(const EDirection direction) const
 	{
 		switch (direction)
 		{
@@ -48,21 +52,30 @@ struct CPoint
 
 };
 
-using PointsQueue = std::deque<CPoint>;
 
 class ISnake
 {
 public:
-	virtual size_t GetLength() = 0;
-	virtual bool Contain(const CPoint&) = 0;
-	virtual void Tic(const EDirection) = 0;
 	virtual void Init(const CPoint&) = 0;
+
+	virtual void Tic(const EDirection) = 0;
+
+	virtual bool Contains(const CPoint&) const = 0;
+
+	virtual void Grow() = 0;
+
+	virtual size_t GetLength() const = 0;
+	
+	virtual CPoint GetHead() const = 0;
+
 };
 
 
 class IField
 {
 public:
-	virtual bool Tic(int action) = 0;
-	virtual void PrintToConsole() = 0;
+	virtual bool Tic(const int) = 0;
+	
+	virtual void PrintToConsole() const = 0;
+
 };

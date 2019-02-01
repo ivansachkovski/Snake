@@ -10,6 +10,8 @@
 #include <conio.h>
 #include <iostream>
 
+#define _TRACE(msg) 
+
 #include "Point.h"
 #include "Field.h"
 #include "Snake.h"

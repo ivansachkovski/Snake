@@ -1,14 +1,14 @@
 #include "stdafx.h"
 
-// Use this character to sig
+// Use this character to signalize about edn of the game
 constexpr int g_exitCharacter = '.';
 
-void Input(std::atomic_bool& bStop, std::atomic_int& input)
+void Input(std::atomic_bool& bStop, std::atomic_int& code)
 {
 	int inputCharacter = 0;
 	while (!bStop && inputCharacter != g_exitCharacter)
 	{
-		input = inputCharacter;
+		code = inputCharacter;
 		inputCharacter = _getch();
 	}
 
@@ -26,17 +26,20 @@ int main()
 	
 	// Use variable bStop to signalize about any end of the game
 	std::atomic_bool bStop = false;
-	std::atomic_int input = 0;
+	std::atomic_int inputCode = 0;
 
 	// Use separate thread to catch input
-	std::thread inputThread(&Input, std::ref(bStop), std::ref(input));
+	std::thread inputThread(&Input, std::ref(bStop), std::ref(inputCode));
 
 	// Main loop
 	while (!bStop)
 	{
-		int action = input;
-		bStop = !pField->Tic(action);
+		int actionCode = inputCode;
+		
+		bStop = !pField->Tic(actionCode);
+		
 		pField->PrintToConsole();
+		
 		Sleep(500);
 	}
 

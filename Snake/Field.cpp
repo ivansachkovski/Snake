@@ -10,10 +10,28 @@ CField::CField(std::unique_ptr<ISnake>&& pSnake, size_t width, size_t height) :
 }
 
 
-bool CField::Tic(int action)
+bool CField::Tic(const int actionCode)
+{
+	EDirection direction = eUnknown;
+	direction = ConvertActionToDirection(actionCode);
+	
+	m_pSnake->Tic(direction);
+
+	if (m_pSnake->GetHead().EqualTo(m_foodCell))
+	{
+		m_pSnake->Grow();
+		GenerateNextFoodItem();
+	}
+
+	return true;
+}
+
+
+EDirection CField::ConvertActionToDirection(const int actionCode) const
 {
 	EDirection direction;
-	switch (action)
+
+	switch (actionCode)
 	{
 	case 72:
 		direction = eUp;
@@ -31,25 +49,26 @@ bool CField::Tic(int action)
 		direction = eUnknown;
 		break;
 	}
-	m_pSnake->Tic(direction);
-	return true;
+
+	return direction;
 }
 
-
-void CField::PrintToConsole()
+void CField::PrintToConsole() const
 {
+	// Free screen
 	system("CLS");
 
+	// Print current state
 	for (size_t yHeight = 1; yHeight <= m_height; ++yHeight)
 	{
 		for (size_t xWidth = 1; xWidth <= m_width; ++xWidth)
 		{
 			char cellValue = '.';
-			if (m_foodCell.Equal(xWidth, yHeight))
+			if (m_foodCell.EqualTo(xWidth, yHeight))
 			{
 				cellValue = 'F';
 			}
-			else if (m_pSnake->Contain(CPoint(xWidth, yHeight)))
+			if (m_pSnake->Contains(CPoint(xWidth, yHeight)))
 			{
 				cellValue = '#';
 			}
@@ -57,12 +76,14 @@ void CField::PrintToConsole()
 		}
 		printf("\n");
 	}
+
+	return;
 }
 
 
 void CField::GenerateNextFoodItem()
 {
-	size_t freeCellsAmount = (m_height * m_height) - m_pSnake->GetLength();
+	int freeCellsAmount = (m_height * m_width) - m_pSnake->GetLength();
 	
 	size_t nextFoodCellIndex = (rand() % freeCellsAmount) + 1;
 	
@@ -70,10 +91,20 @@ void CField::GenerateNextFoodItem()
 	{
 		for (size_t xWidth = 1; xWidth <= m_width; ++xWidth)
 		{
-			if (m_pSnake->Contain(CPoint(xWidth, yHeight)))
+			if (!m_pSnake->Contains(CPoint(xWidth, yHeight)))
 			{
+				--nextFoodCellIndex;
+				if (nextFoodCellIndex == 0)
+				{
+					m_foodCell = CPoint(xWidth, yHeight);
 
+					return;
+				}
 			}
 		}
 	}
+
+	// TODO :: wrong situation
+
+	return;
 }
