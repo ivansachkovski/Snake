@@ -36,7 +36,7 @@ int main()
 	{
 		int actionCode = inputCode;
 		
-		bStop = !pField->Tic(actionCode);
+		bool bSuccess = pField->Tic(actionCode);
 		
 		pField->PrintToConsole();
 		

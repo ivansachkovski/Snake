@@ -25,3 +25,4 @@ private:
 	EDirection ConvertActionToDirection(const int) const;
 
 };
+

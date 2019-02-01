@@ -15,17 +15,15 @@ bool CField::Tic(const int actionCode)
 	EDirection direction = eUnknown;
 	direction = ConvertActionToDirection(actionCode);
 	
-	m_pSnake->Tic(direction);
+	bool bSuccess = m_pSnake->Tic(direction, m_foodCell);
 
-	if (m_pSnake->GetHead().EqualTo(m_foodCell))
+	if (!m_foodCell.IsValid())
 	{
-		m_pSnake->Grow();
 		GenerateNextFoodItem();
 	}
 
-	return true;
+	return bSuccess;
 }
-
 
 EDirection CField::ConvertActionToDirection(const int actionCode) const
 {
@@ -68,7 +66,7 @@ void CField::PrintToConsole() const
 			{
 				cellValue = 'F';
 			}
-			if (m_pSnake->Contains(CPoint(xWidth, yHeight)))
+			if (m_pSnake->Contains(CPoint(xWidth, yHeight), false))
 			{
 				cellValue = '#';
 			}
@@ -91,7 +89,7 @@ void CField::GenerateNextFoodItem()
 	{
 		for (size_t xWidth = 1; xWidth <= m_width; ++xWidth)
 		{
-			if (!m_pSnake->Contains(CPoint(xWidth, yHeight)))
+			if (!m_pSnake->Contains(CPoint(xWidth, yHeight), false))
 			{
 				--nextFoodCellIndex;
 				if (nextFoodCellIndex == 0)

@@ -120,7 +120,9 @@
     <ClCompile Include="Snake.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Checks.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="stdafx.h" />

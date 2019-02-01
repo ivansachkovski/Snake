@@ -47,35 +47,23 @@ public:
 			return CPoint(m_xWidth + 1, m_yHeight);
 		case eLeft:
 			return CPoint(m_xWidth - 1, m_yHeight);
+		default:
+			// TODO :: wrong situation
+			break;
 		}
+		
+		return CPoint(0, 0);
 	}
 
-};
+	bool IsValid() const
+	{
+		return (m_xWidth != -1) && (m_yHeight != -1);
+	}
 
-
-class ISnake
-{
-public:
-	virtual void Init(const CPoint&) = 0;
-
-	virtual void Tic(const EDirection) = 0;
-
-	virtual bool Contains(const CPoint&) const = 0;
-
-	virtual void Grow() = 0;
-
-	virtual size_t GetLength() const = 0;
-	
-	virtual CPoint GetHead() const = 0;
-
-};
-
-
-class IField
-{
-public:
-	virtual bool Tic(const int) = 0;
-	
-	virtual void PrintToConsole() const = 0;
+	void SetInvalid()
+	{
+		m_xWidth = -1;
+		m_yHeight = -1;
+	}
 
 };

@@ -16,15 +16,17 @@ public:
 
 	void Init(const CPoint&) override;
 
-	void Tic(const EDirection) override;
+	bool Tic(const EDirection, CPoint& foodCell) override;
 
 	void Grow() override;
 
-	bool Contains(const CPoint&) const override;
+	bool Contains(const CPoint&, bool) const override;
 
 	size_t GetLength() const override;
 
 	CPoint GetHead() const override;
+
+	void CheckForGrowth(CPoint& foodCell);
 
 private:
 

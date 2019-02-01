@@ -11,11 +11,25 @@ size_t CSnake::GetLength() const
 	return m_body.size();
 }
 
-void CSnake::Tic(const EDirection direction)
+bool CSnake::Tic(const EDirection direction, CPoint& foodCell)
 {
 	ChangeDirection(direction);
 
 	ChangePosition();
+
+	CheckForGrowth(foodCell);
+
+	return true;
+}
+
+void CSnake::CheckForGrowth(CPoint& foodCell)
+{
+	if (GetHead().EqualTo(foodCell))
+	{
+		Grow();
+
+		foodCell.SetInvalid();
+	}
 
 	return;
 }
@@ -74,14 +88,21 @@ CPoint CSnake::GetHead() const
 	return m_body.front();
 }
 
-bool CSnake::Contains(const CPoint& point) const
+bool CSnake::Contains(const CPoint& point, bool bCheckAsHead) const
 {
+	// TODO handle bSkipHead parameter
+	CPoint head = m_body.front();
+
+	int elementsCounter = 0;
+
 	for (auto bodyElement : m_body)
 	{
 		if (bodyElement.EqualTo(point))
 		{
 			return true;
 		}
+
+		++elementsCounter;
 	}
 
 	return false;
