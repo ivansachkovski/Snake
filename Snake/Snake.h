@@ -33,5 +33,4 @@ private:
 	void ChangeDirection(const EDirection);
 
 	void ChangePosition();
-
 };

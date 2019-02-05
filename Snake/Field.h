@@ -23,6 +23,5 @@ private:
 	void GenerateNextFoodItem();
 
 	EDirection ConvertActionToDirection(const int) const;
-
 };
 

@@ -1,16 +1,5 @@
 #pragma once
 
-// Use this enumeration for determination of shake's movement direction
-enum EDirection
-{
-	eUp,
-	eDown,
-	eRight,
-	eLeft,
-	eUnknown
-};
-
-
 class CPoint
 {
 private:
@@ -65,5 +54,4 @@ public:
 		m_xWidth = -1;
 		m_yHeight = -1;
 	}
-
 };

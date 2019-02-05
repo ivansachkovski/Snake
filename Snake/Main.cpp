@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-// Use this character to signalize about edn of the game
+// Use this character to signalize about end of the game
 constexpr int g_exitCharacter = '.';
 
 void Input(std::atomic_bool& bStop, std::atomic_int& code)
@@ -13,13 +13,18 @@ void Input(std::atomic_bool& bStop, std::atomic_int& code)
 	}
 
 	bStop = true;
-
-	return;
 }
-
 
 int main()
 {
+	//
+	std::shared_ptr<CGameModel> pModel(new CGameModel());
+	CGameController controller(pModel);
+	CGameView view(pModel);
+
+	controller.Start();
+
+	//
 	// Create all necessary objects
 	std::unique_ptr<ISnake> pSnake(new CSnake());
 	std::unique_ptr<IField> pField(new CField(std::move(pSnake), 10, 10));

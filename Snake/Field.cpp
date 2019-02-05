@@ -74,8 +74,6 @@ void CField::PrintToConsole() const
 		}
 		printf("\n");
 	}
-
-	return;
 }
 
 
@@ -101,8 +99,9 @@ void CField::GenerateNextFoodItem()
 			}
 		}
 	}
-
+	
 	// TODO :: wrong situation
+	assert(false);
 
 	return;
 }
