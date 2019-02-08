@@ -78,7 +78,8 @@ public:
 class IModel : 
 	public IObserverable
 {
-	
+public:
+	virtual void Move() = 0;
 };
 
 
@@ -99,7 +100,7 @@ public:
 
 class IController
 {
-private:
+protected:
 	std::shared_ptr<IModel> m_pModel;
 
 public:

@@ -18,9 +18,9 @@ void Input(std::atomic_bool& bStop, std::atomic_int& code)
 int main()
 {
 	//
-	std::shared_ptr<CGameModel> pModel(new CGameModel());
-	CGameController controller(pModel);
-	CGameView view(pModel);
+	std::shared_ptr<GameModel> pModel(new GameModel());
+	GameController controller(pModel);
+	GameView view(pModel);
 
 	controller.Start();
 

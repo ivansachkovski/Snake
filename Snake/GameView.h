@@ -1,10 +1,10 @@
 #pragma once
 
-class CGameView :
+class GameView :
 	public IView
 {
 public:
-	CGameView(const std::shared_ptr<IModel>& pModel);
+	explicit GameView(const std::shared_ptr<IModel>& pModel);
 
 	void Update() override;
 };

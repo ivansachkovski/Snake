@@ -1,12 +1,12 @@
 #include "stdafx.h"
 
-CGameView::CGameView(const std::shared_ptr<IModel>& pModel) :
+GameView::GameView(const std::shared_ptr<IModel>& pModel) :
 	IView(pModel)
 {
 
 }
 
-void CGameView::Update()
+void GameView::Update()
 {
 	system("CLS");
 
