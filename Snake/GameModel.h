@@ -3,7 +3,7 @@
 class GameModel : 
 	public IModel
 {
-	std::unique_ptr<IField> m_pField;
+	SnakeHandler* m_pSnakeHandler;
 
 public:
 	explicit GameModel();

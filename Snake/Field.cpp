@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-CField::CField(std::unique_ptr<ISnake>&& pSnake, size_t width, size_t height) :
+SnakeHandler::SnakeHandler(std::unique_ptr<ISnake>&& pSnake, size_t width, size_t height) :
 	m_width(width),
 	m_height(height),
 	m_pSnake(std::move(pSnake)),
@@ -10,7 +10,7 @@ CField::CField(std::unique_ptr<ISnake>&& pSnake, size_t width, size_t height) :
 }
 
 
-bool CField::Tic(const int actionCode)
+bool SnakeHandler::Tic(const int actionCode)
 {
 	EDirection direction = eUnknown;
 	direction = ConvertActionToDirection(actionCode);
@@ -25,7 +25,7 @@ bool CField::Tic(const int actionCode)
 	return bSuccess;
 }
 
-EDirection CField::ConvertActionToDirection(const int actionCode) const
+EDirection SnakeHandler::ConvertActionToDirection(const int actionCode) const
 {
 	EDirection direction;
 
@@ -51,33 +51,8 @@ EDirection CField::ConvertActionToDirection(const int actionCode) const
 	return direction;
 }
 
-void CField::PrintToConsole() const
-{
-	// Free screen
-	system("CLS");
 
-	// Print current state
-	for (size_t yHeight = 1; yHeight <= m_height; ++yHeight)
-	{
-		for (size_t xWidth = 1; xWidth <= m_width; ++xWidth)
-		{
-			char cellValue = '.';
-			if (m_foodCell.EqualTo(xWidth, yHeight))
-			{
-				cellValue = 'F';
-			}
-			if (m_pSnake->Contains(CPoint(xWidth, yHeight), false))
-			{
-				cellValue = '#';
-			}
-			printf("%c", cellValue);
-		}
-		printf("\n");
-	}
-}
-
-
-void CField::GenerateNextFoodItem()
+void SnakeHandler::GenerateNextFoodItem()
 {
 	int freeCellsAmount = (m_height * m_width) - m_pSnake->GetLength();
 	

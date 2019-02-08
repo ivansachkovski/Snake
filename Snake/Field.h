@@ -1,6 +1,6 @@
 #pragma once
 
-class CField :
+class SnakeHandler :
 	public IField
 {
 private:
@@ -12,11 +12,10 @@ private:
 	CPoint m_foodCell;
 
 public:
-	explicit CField(std::unique_ptr<ISnake>&&, size_t, size_t);
+	explicit SnakeHandler(std::unique_ptr<ISnake>&&, size_t, size_t);
 	
 	bool Tic(const int) override;
 	
-	void PrintToConsole() const override;
 
 private:
 
@@ -24,4 +23,3 @@ private:
 
 	EDirection ConvertActionToDirection(const int) const;
 };
-

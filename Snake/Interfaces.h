@@ -42,8 +42,6 @@ class IField
 {
 public:
 	virtual bool Tic(const int actionCode) = 0;
-
-	virtual void PrintToConsole() const = 0;
 };
 
 
