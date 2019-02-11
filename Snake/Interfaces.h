@@ -4,12 +4,27 @@ enum CellType
 {
 	eEmpty,
 	eSnake,
-	eFood
+	eTarget
 };
 
-using Table = std::vector<std::vector<CellType>>;
+enum ExceptionType
+{
+	eError,
+	eSuccess
+};
 
-class Point;
+struct Exception : public std::exception
+{
+	std::string m_message;
+	ExceptionType m_type;
+
+	Exception(const std::string& message, const ExceptionType type) :
+		m_message(message),
+		m_type(type)
+	{
+
+	}
+};
 
 enum Direction
 {
@@ -18,11 +33,6 @@ enum Direction
 	eRight,
 	eLeft,
 	eUnknown
-};
-
-class ICommand
-{
-
 };
 
 class IObserver

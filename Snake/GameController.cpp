@@ -3,7 +3,10 @@
 GameController::GameController(GameModel* pModel) :
 	m_pModel(pModel)
 {
-
+	m_commands[72] = [&]() { this->m_pModel->ChangeDirectionTo(eUp); };
+	m_commands[80] = [&]() { this->m_pModel->ChangeDirectionTo(eDown); };
+	m_commands[77] = [&]() { this->m_pModel->ChangeDirectionTo(eRight); };
+	m_commands[75] = [&]() { this->m_pModel->ChangeDirectionTo(eLeft); };
 }
 
 void GameController::Start()
@@ -28,18 +31,37 @@ void GameController::ActionsGenerator()
 {
 	while (!m_stopFlag)
 	{
-		m_pModel->Move();
+		try
+		{
+			m_pModel->Tic();
+			
+			Sleep(200);
+		}
+		catch (const Exception& ex)
+		{
+			m_stopFlag = true;
+		}
 	}
 }
 
 void GameController::InputThreadFunction()
 {
-	int inputCharacterCode = 0;
+	int inputCommandCode = 0;
+
 	while (!m_stopFlag)
 	{
-		m_inputCharacterCode = inputCharacterCode;
-		inputCharacterCode = _getch();
-	}
+		inputCommandCode = _getch();
 
-	m_stopFlag = true;
+		HandleCommand(inputCommandCode);
+	}
+}
+
+void GameController::HandleCommand(const int commandCode)
+{
+	auto commandIter = m_commands.find(commandCode);
+
+	if (commandIter != m_commands.end())
+	{
+		commandIter->second();
+	}
 }

@@ -36,9 +36,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Snake.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -65,19 +62,16 @@
     <ClInclude Include="GameModel.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Snake.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="SnakeHandler.h">
+    <ClInclude Include="Table.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>

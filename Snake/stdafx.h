@@ -10,16 +10,12 @@
 #include <conio.h>
 #include <iostream>
 #include <assert.h>
-
-#define _TRACE(msg) 
-
-//#define _S_CHECK(exp, result) { if (exp == result) { return result; } }
+#include <map>
 
 #include "Interfaces.h"
-#include "Command.h"
 #include "Point.h"
+#include "Table.h"
 #include "Snake.h"
-#include "SnakeHandler.h"
 
 #include "GameModel.h"
 #include "GameController.h"

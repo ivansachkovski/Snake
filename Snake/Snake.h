@@ -1,35 +1,30 @@
 #pragma once
 
-class Snake
+class Snake :
+	public std::deque<Point>
 {
 private:
-	using PointsQueue = std::deque<CPoint>;
-	PointsQueue m_body;
 
-	Direction m_direction;
+	Direction m_direction = eRight;
 
+	// Mutex is used to get access to m_direction
+	std::mutex m_mutex;
+	
 public:
-	explicit Snake();
 
-	~Snake() = default;
+	void Init(const Point&);
 
-	void Init(const CPoint&);
+	bool Tic(Point& targetCell);
 
-	bool Tic(const Direction, CPoint& foodCell);
+	void GrowUp();
 
-	void Grow();
+	bool Contains(const Point&, bool) const;
 
-	bool Contains(const CPoint&, bool) const;
+	void CheckForGrowth(Point& foodCell);
 
-	size_t GetLength() const;
-
-	CPoint GetHead() const;
-
-	void CheckForGrowth(CPoint& foodCell);
+	void TryToRotate(const Direction);
 
 private:
 
-	void ChangeDirection(const Direction);
-
-	void ChangePosition();
+	void MoveForward();
 };

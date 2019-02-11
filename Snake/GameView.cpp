@@ -28,7 +28,7 @@ void GameView::Update()
 			case eSnake:
 				cellView = '#';
 				break;
-			case eFood:
+			case eTarget:
 				cellView = 'F';
 				break;
 			default:

@@ -1,101 +1,85 @@
 #include "stdafx.h"
 
-Snake::Snake():
-	m_direction(eRight)
+bool Snake::Tic(Point& foodCell)
 {
-	
-}
-
-size_t Snake::GetLength() const
-{
-	return m_body.size();
-}
-
-bool Snake::Tic(const Direction direction, CPoint& foodCell)
-{
-	ChangeDirection(direction);
-
-	ChangePosition();
+	MoveForward();
 
 	CheckForGrowth(foodCell);
 
 	return true;
 }
 
-void Snake::CheckForGrowth(CPoint& foodCell)
+void Snake::CheckForGrowth(Point& targetCell)
 {
-	if (GetHead().EqualTo(foodCell))
+	if (front().EqualTo(targetCell))
 	{
-		Grow();
+		GrowUp();
 
-		foodCell.SetInvalid();
+		targetCell.SetInvalid();
 	}
 
 	return;
 }
 
-void Snake::ChangeDirection(const Direction direction)
+void Snake::TryToRotate(const Direction direction)
 {
-	if (direction != eUnknown)
+	std::lock_guard<std::mutex> guard(m_mutex);
+
+	switch (m_direction)
 	{
-		switch (m_direction)
-		{
-		case eUp:
-			m_direction = (direction == eDown) ? m_direction : direction;
-			break;
-		case eDown:
-			m_direction = (direction == eUp) ? m_direction : direction;
-			break;
-		case eLeft:
-			m_direction = (direction == eRight) ? m_direction : direction;
-			break;
-		case eRight:
-			m_direction = (direction == eLeft) ? m_direction : direction;
-			break;
-		default:
-			// TODO :: wrong situation 
-			break;
-		}
+	case eUp:
+		m_direction = (direction == eDown) ? m_direction : direction;
+		break;
+	case eDown:
+		m_direction = (direction == eUp) ? m_direction : direction;
+		break;
+	case eLeft:
+		m_direction = (direction == eRight) ? m_direction : direction;
+		break;
+	case eRight:
+		m_direction = (direction == eLeft) ? m_direction : direction;
+		break;
+	default:
+		assert(false);
+		break;
 	}
-
-	return;
 }
 
-void Snake::ChangePosition()
+void Snake::MoveForward()
 {
-	m_body.push_front(m_body.front().GetNextPointAccordingToDirection(m_direction));
-	m_body.pop_back();
+	std::lock_guard<std::mutex> guard(m_mutex);
 
-	return;
+	push_front(front().GetNextPointAccordingToDirection(m_direction));
+	pop_back();
 }
 
-void Snake::Init(const CPoint& point)
+void Snake::Init(const Point& point)
 {
-	m_body.push_back(point);
+	clear();
 
-	return;
+	push_back(point);
 }
 
-void Snake::Grow()
+void Snake::GrowUp()
 {
-	m_body.push_back(m_body.back());
-
-	return;
+	if (size())
+	{
+		push_back(back());
+	}
+	else
+	{
+		assert(false);
+	}
 }
 
-CPoint Snake::GetHead() const
-{
-	return m_body.front();
-}
-
-bool Snake::Contains(const CPoint& point, bool bCheckAsHead) const
+bool Snake::Contains(const Point& point, bool bCheckAsHead) const
 {
 	// TODO handle bSkipHead parameter
-	CPoint head = m_body.front();
+	Point head = front();
 
 	int elementsCounter = 0;
 
-	for (auto bodyElement : m_body)
+	for (auto bodyElement : (*this))
 	{
 		if (bodyElement.EqualTo(point))
 		{
