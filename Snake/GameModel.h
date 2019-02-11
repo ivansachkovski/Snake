@@ -1,12 +1,14 @@
 #pragma once
 
-class GameModel : 
-	public IModel
+class GameModel :
+	public IObserverable
 {
 	SnakeHandler* m_pSnakeHandler;
 
 public:
 	explicit GameModel();
 
-	void Move() override;
+	void Move();
+
+	void GetTable(Table& table) const;
 };

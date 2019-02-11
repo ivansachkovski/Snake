@@ -1,10 +1,13 @@
 #pragma once
 
 class GameView :
-	public IView
+	public IObserver
 {
-public:
-	explicit GameView(const std::shared_ptr<IModel>& pModel);
+private:
+	GameModel* m_pModel;
 
-	void Update() override;
+public:
+	explicit GameView(GameModel* pModel);
+
+	void Update();
 };

@@ -24,7 +24,7 @@ public:
 		return EqualTo(point.m_xWidth, point.m_yHeight);
 	}
 
-	CPoint GetNextPointAccordingToDirection(const EDirection direction) const
+	CPoint GetNextPointAccordingToDirection(const Direction direction) const
 	{
 		switch (direction)
 		{

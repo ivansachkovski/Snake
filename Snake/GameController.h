@@ -1,7 +1,6 @@
 #pragma once
 
-class GameController :
-	public IController
+class GameController
 {
 private:
 	std::atomic_bool m_stopFlag = false;
@@ -9,8 +8,10 @@ private:
 
 	std::thread m_inputThread;
 
+	GameModel* m_pModel;
+
 public:
-	explicit GameController(const std::shared_ptr<IModel>& pModel);
+	explicit GameController(GameModel* pModel);
 	
 	void Start();
 	void Stop();

@@ -1,17 +1,17 @@
 #include "stdafx.h"
 
-CSnake::CSnake():
+Snake::Snake():
 	m_direction(eRight)
 {
 	
 }
 
-size_t CSnake::GetLength() const
+size_t Snake::GetLength() const
 {
 	return m_body.size();
 }
 
-bool CSnake::Tic(const EDirection direction, CPoint& foodCell)
+bool Snake::Tic(const Direction direction, CPoint& foodCell)
 {
 	ChangeDirection(direction);
 
@@ -22,7 +22,7 @@ bool CSnake::Tic(const EDirection direction, CPoint& foodCell)
 	return true;
 }
 
-void CSnake::CheckForGrowth(CPoint& foodCell)
+void Snake::CheckForGrowth(CPoint& foodCell)
 {
 	if (GetHead().EqualTo(foodCell))
 	{
@@ -34,7 +34,7 @@ void CSnake::CheckForGrowth(CPoint& foodCell)
 	return;
 }
 
-void CSnake::ChangeDirection(const EDirection direction)
+void Snake::ChangeDirection(const Direction direction)
 {
 	if (direction != eUnknown)
 	{
@@ -61,7 +61,7 @@ void CSnake::ChangeDirection(const EDirection direction)
 	return;
 }
 
-void CSnake::ChangePosition()
+void Snake::ChangePosition()
 {
 	m_body.push_front(m_body.front().GetNextPointAccordingToDirection(m_direction));
 	m_body.pop_back();
@@ -69,26 +69,26 @@ void CSnake::ChangePosition()
 	return;
 }
 
-void CSnake::Init(const CPoint& point)
+void Snake::Init(const CPoint& point)
 {
 	m_body.push_back(point);
 
 	return;
 }
 
-void CSnake::Grow()
+void Snake::Grow()
 {
 	m_body.push_back(m_body.back());
 
 	return;
 }
 
-CPoint CSnake::GetHead() const
+CPoint Snake::GetHead() const
 {
 	return m_body.front();
 }
 
-bool CSnake::Contains(const CPoint& point, bool bCheckAsHead) const
+bool Snake::Contains(const CPoint& point, bool bCheckAsHead) const
 {
 	// TODO handle bSkipHead parameter
 	CPoint head = m_body.front();

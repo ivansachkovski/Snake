@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
-GameController::GameController(const std::shared_ptr<IModel>& pModel) :
-	IController(pModel)
+GameController::GameController(GameModel* pModel) :
+	m_pModel(pModel)
 {
 
 }

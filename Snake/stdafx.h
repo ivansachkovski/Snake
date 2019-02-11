@@ -18,9 +18,9 @@
 #include "Interfaces.h"
 #include "Command.h"
 #include "Point.h"
-#include "Field.h"
 #include "Snake.h"
+#include "SnakeHandler.h"
 
+#include "GameModel.h"
 #include "GameController.h"
 #include "GameView.h"
-#include "GameModel.h"

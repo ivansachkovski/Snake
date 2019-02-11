@@ -74,10 +74,10 @@
     <ClInclude Include="Command.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Field.h">
+    <ClInclude Include="Point.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Point.h">
+    <ClInclude Include="SnakeHandler.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>

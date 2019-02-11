@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-SnakeHandler::SnakeHandler(std::unique_ptr<ISnake>&& pSnake, size_t width, size_t height) :
+SnakeHandler::SnakeHandler(std::unique_ptr<Snake>&& pSnake, size_t width, size_t height) :
 	m_width(width),
 	m_height(height),
 	m_pSnake(std::move(pSnake)),
@@ -12,7 +12,7 @@ SnakeHandler::SnakeHandler(std::unique_ptr<ISnake>&& pSnake, size_t width, size_
 
 bool SnakeHandler::Tic(const int actionCode)
 {
-	EDirection direction = eUnknown;
+	Direction direction = eUnknown;
 	direction = ConvertActionToDirection(actionCode);
 	
 	bool bSuccess = m_pSnake->Tic(direction, m_foodCell);
@@ -25,9 +25,9 @@ bool SnakeHandler::Tic(const int actionCode)
 	return bSuccess;
 }
 
-EDirection SnakeHandler::ConvertActionToDirection(const int actionCode) const
+Direction SnakeHandler::ConvertActionToDirection(const int actionCode) const
 {
-	EDirection direction;
+	Direction direction;
 
 	switch (actionCode)
 	{

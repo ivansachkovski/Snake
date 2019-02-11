@@ -1,36 +1,35 @@
 #pragma once
 
-class CSnake : 
-	public ISnake
+class Snake
 {
 private:
 	using PointsQueue = std::deque<CPoint>;
 	PointsQueue m_body;
 
-	EDirection m_direction;
+	Direction m_direction;
 
 public:
-	explicit CSnake();
+	explicit Snake();
 
-	~CSnake() = default;
+	~Snake() = default;
 
-	void Init(const CPoint&) override;
+	void Init(const CPoint&);
 
-	bool Tic(const EDirection, CPoint& foodCell) override;
+	bool Tic(const Direction, CPoint& foodCell);
 
-	void Grow() override;
+	void Grow();
 
-	bool Contains(const CPoint&, bool) const override;
+	bool Contains(const CPoint&, bool) const;
 
-	size_t GetLength() const override;
+	size_t GetLength() const;
 
-	CPoint GetHead() const override;
+	CPoint GetHead() const;
 
 	void CheckForGrowth(CPoint& foodCell);
 
 private:
 
-	void ChangeDirection(const EDirection);
+	void ChangeDirection(const Direction);
 
 	void ChangePosition();
 };
